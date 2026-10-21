@@ -10,21 +10,21 @@ Además, este script **NO realiza ninguna modificación, inyección ni alteraci�
 
 Instalador Laucher (flatpak) por [nmlynch94](https://github.com/nmlynch94/com.jagexlauncher.JagexLauncher).
 
-## ⚠️ Aviso Importante (Uso bajo discreción)
+## Aviso Importante (Uso bajo discreción)
 
 > **PRECAUCIÓN:** Este script es actualmente un **side project** personal y se encuentra en fase de desarrollo. **Aún no se han realizado todas las pruebas exhaustivas y necesarias** en diferentes entornos y configuraciones de hardware. (Únicamente probado en Hardware AMD).
 >
 > Úsalo **bajo tu propia discreción y riesgo**. Se recomienda revisar el código fuente antes de ejecutarlo para asegurarte de que es compatible con las necesidades y la configuración actual de tu sistema Arch Linux.
 
 
-## 🛠 Requisitos Previos
+## Requisitos Previos
 
 * Sistema operativo basado en **Arch Linux**.
 * Tener configurado `sudo` para el usuario que ejecuta el script (requerido para la configuración inicial de Polkit y pacman).
 
 ---
 
-## 🚀 ¿Qué hace exactamente este script?
+## ¿Qué hace exactamente este script?
 
 Desglose técnico de las modificaciones que realiza el script en tu sistema:
 
@@ -42,7 +42,7 @@ Configura GameMode para ejecutar tareas específicas en el ciclo de vida del jue
 * **Al Iniciar el Juego:** Cambia el gobernador de la CPU a `performance`, eleva el nivel de energía de las GPUs AMD a `high`, **mata el proceso de MEGAsync** (para mitigar picos de lag por sincronización de red/disco) y reduce el `swappiness` a `10` para priorizar la memoria RAM/zRAM y evitar el uso de swap en disco.
 * **Al Cerrar el Juego:** Devuelve la CPU al gobernador `schedutil`, cambia el `swappiness` de Linux a `60` y vuelve a levantar **MEGAsync** en segundo plano.
 
-> 💡 **Nota sobre MEGASync:** Este script **NO instala MEGASync**. La integración está diseñada para optimizar el rendimiento deteniendo su consumo de CPU/red mientras juegas si ya lo usas en tu día a día. Si **no** utilizas MEGASync, el script funcionará exactamente igual de forma segura, ignorando de manera silenciosa las directivas de control del proceso sin afectar en nada a tu sistema.
+> **Nota sobre MEGASync:** Este script **NO instala MEGASync**. La integración está diseñada para optimizar el rendimiento deteniendo su consumo de CPU/red mientras juegas si ya lo usas en tu día a día. Si **no** utilizas MEGASync, el script funcionará exactamente igual de forma segura, ignorando de manera silenciosa las directivas de control del proceso sin afectar en nada a tu sistema.
 
 ### 4. Elevación de Privilegios Segura sin Contraseñas (Polkit)
 Modificar parámetros del sistema (`cpupower` y `sysctl`) para evitar que una ventana emergente de `sudo` o `pkexec` interrumpa la carga de tu juego a mitad de camino exigiendo tus credenciales (requiere root).
@@ -52,7 +52,7 @@ Modificar parámetros del sistema (`cpupower` y `sysctl`) para evitar que una ve
 ### 5. Inyección en el Entorno de Escritorio
 * Modifica tu archivo local `.desktop` (`~/.local/share/applications/...`) anteponiendo el prefijo `gamemoderun` a la directiva `Exec=`, asegurando que el juego siempre se optimice sin importar si lo lanzas desde la terminal, dmenu/rofi o tu launcher de aplicaciones.
 
-## 🔁 ¿Tengo que ejecutar este script cada vez que vaya a jugar?
+## ¿Tengo que ejecutar este script cada vez que vaya a jugar?
 
 **No. El script solo se ejecuta UNA VEZ.**
 
@@ -62,7 +62,7 @@ Está diseñado como una herramienta de aprovisionamiento e instalación inicial
 2. **Carga transparente:** Puedes abrir el Jagex Launcher directamente desde tu menú de aplicaciones, dmenu/rofi o interfaz gráfica habitual. 
 3. **Disparador automático:** Al lanzar el juego, el demonio de **GameMode** detectará la ejecución e inyectará los perfiles de hardware, modificará el `swappiness` y gestionará el proceso de MEGASync por sí solo, revirtiendo todo al cerrarlo sin necesidad de volver a tocar este script.
 
-## 🔒 Seguridad: ¿Cómo funciona el bypass con `pkexec`?
+## Seguridad: ¿Cómo funciona el bypass con `pkexec`?
 
 Cuando un script necesita cambiar perfiles de hardware (como el gobernador de la CPU) o parámetros del núcleo (como `vm.swappiness`), tradicionalmente requiere el uso de `sudo`. El problema de usar `sudo` dentro de herramientas de automatización como **GameMode** es que requiere que el usuario ingrese su contraseña manualmente en la terminal, lo cual rompe la experiencia fluida al lanzar un juego desde interfaces gráficas o entornos de escritorio.
 
